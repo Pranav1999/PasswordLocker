@@ -21,6 +21,11 @@ def createNewPass(userID,  key):
 	passList[userID] = password
 	saveFile(str(passList), key)
 
+def deletePass(userID,  key):
+	passList = readFile(key)
+	del passList[userID]
+	saveFile(str(passList), key)
+
 def saveFile(text, key):
     text = encrypt(key,text)
     file = open('passwords.txt','w')
@@ -76,8 +81,10 @@ def password_locker():
     elif sys.argv[1] == "retrieve":
         passwords=readFile(key)
         readPass(sys.argv[2],passwords)
+    elif sys.argv[1] == "delete":
+    	deletePass(sys.argv[2], key)
     else:
-        print('Usage: command [save/retrieve] [userID]')
+        print('Usage: command [save/retrieve/delete] [userID]')
         sys.exit()
 
 password_locker()
